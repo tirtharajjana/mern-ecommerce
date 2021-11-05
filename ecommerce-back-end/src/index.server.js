@@ -1,11 +1,12 @@
 const express = require('express');
 const env = require('dotenv');
-const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 //routes
 const authRoutes = require('./routes/auth')
+const categoryRoutes = require('./routes/category')
 const adminRoutes = require('./routes/admin/auth')
+
 
 const app = express();
 env.config();
@@ -18,10 +19,10 @@ mongoose.connect(process.env.MONGODB_URL, {
 }).catch(err => {
     console.log(`Database error ${err}`);
 });
-
-app.use(bodyParser.json());
+app.use(express.json());
 app.use('/api', authRoutes)
 app.use('/api', adminRoutes)
+app.use('/api', categoryRoutes)
 
 app.listen(process.env.PORT, () => {
     console.log(`Server is running on port ${process.env.PORT}`);
