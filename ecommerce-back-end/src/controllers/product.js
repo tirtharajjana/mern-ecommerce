@@ -13,7 +13,7 @@ exports.createProduct = (req, res) => {
             return { img: file.filename }
         })
     }
-
+    // console.log(req.body);
     const product = new Product({
         name,
         slug: slugify(name),
