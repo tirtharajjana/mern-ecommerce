@@ -1,10 +1,17 @@
 import React from 'react'
-import { Container, Form, Row, Col, Button } from 'react-bootstrap'
+import { Navigate } from 'react-router-dom'
+import { Container, Form, Row, Col, Button } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
 
 import Layout from '../../components/Layout'
 import Input from '../../components/UI/Input'
 
+
 const Signup = () => {
+    const auth = useSelector(state => state.auth)
+    if (auth.authenticate) {
+        return <Navigate to={'/'} />
+    }
     return (
         <>
             <Layout>
@@ -24,10 +31,6 @@ const Signup = () => {
 
                                 <Input label="Email" placeholder="Email" value="" type="email" onChange={() => { }} />
                                 <Input label="Password" placeholder="Password" value="" type="password" onChange={() => { }} />
-
-
-
-
                                 <Button variant="primary" type="submit">
                                     Submit
                                 </Button>
