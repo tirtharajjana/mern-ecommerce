@@ -13,26 +13,12 @@ const Home = () => {
     }
     return (
         <>
-            <Layout>
-                <Container fluid >
-                    <Row>
-                        <Col md={2} className="sidebar" >
-                            <ul>
-                                <li><NavLink to='/' >Home</NavLink></li>
-                                <li><NavLink to='/orders' >Orders</NavLink></li>
-                                <li><NavLink to='/products' >Products</NavLink></li>
-                            </ul>
-                        </Col>
-                        <Col md={10} style={{ marginLeft: "auto" }} >Container</Col>
-                    </Row>
-                </Container>
-
-
-                {/* <div style={{ margin: "5rem " }} className="jumbotron text-center" >
+            <Layout sidebar >
+                <div style={{ margin: "5rem " }} className="jumbotron text-center" >
 
                     <h1>Welcome to the Admin Dashboard</h1>
                     <p>lorem</p>
-                </div> */}
+                </div>
 
             </Layout>
         </>
