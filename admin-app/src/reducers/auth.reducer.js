@@ -9,8 +9,10 @@ const initialState = {
         picture: "",
     },
     authenticate: false,
-    authenticating: false
-
+    authenticating: false,
+    loading: false,
+    error: null,
+    message: ""
 }
 
 // eslint-disable-next-line import/no-anonymous-default-export
@@ -35,7 +37,20 @@ export default (state = initialState, action) => {
             break;
         case authConstants.LOGOUT_REQUEST:
             state = {
+                ...state,
+                loading: true
+            }
+            break;
+        case authConstants.LOGOUT_SUCCESS:
+            state = {
                 ...initialState
+            }
+            break;
+        case authConstants.LOGOUT_FAILURE:
+            state = {
+                ...state,
+                error: action.payload.error,
+                loading: false
             }
             break;
 
