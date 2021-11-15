@@ -35,18 +35,19 @@ const initState = {
 const buildNewCategories = (parentId, categories, category) => {
     let myCategories = [];
 
-    // if(parentId === undefined){
-    //     return [
-    //         ...categories,
-    //         {
-    //             _id: category._id,
-    //             name: category.name,
-    //             slug: category.slug,
-    //             type: category.type,
-    //             children: []
-    //         }
-    //     ];
-    // }
+    if (parentId === undefined) {
+        return [
+            ...categories,
+            {
+                _id: category._id,
+                name: category.name,
+                slug: category.slug,
+                type: category.type,
+                children: []
+            }
+        ];
+    }
+
 
     for (let cat of categories) {
 
