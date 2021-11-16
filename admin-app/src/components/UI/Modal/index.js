@@ -5,7 +5,7 @@ import { Button, Modal } from 'react-bootstrap'
 const NewModal = (props) => {
     return (
         <div>
-            <Modal show={props.show} onHide={props.handleClose}>
+            <Modal size={props.size} show={props.show} onHide={props.handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>{props.modalTitle}</Modal.Title>
                 </Modal.Header>
@@ -13,9 +13,9 @@ const NewModal = (props) => {
                     {props.children}
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={props.handleClose}>
+                    {/* <Button variant="secondary" onClick={props.handleClose}>
                         Close
-                    </Button>
+                    </Button> */}
                     <Button variant="primary" onClick={props.handleSubmit}>
                         Save Changes
                     </Button>

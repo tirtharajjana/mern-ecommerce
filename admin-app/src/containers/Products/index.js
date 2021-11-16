@@ -3,8 +3,10 @@ import Layout from '../../components/Layout'
 import { Col, Container, Row, Button, Table } from 'react-bootstrap'
 import Input from '../../components/UI/Input';
 import { useSelector, useDispatch } from 'react-redux';
-import { addProduct } from '../../actions/product.action';
+import { addProduct } from '../../actions';
 import Modal from '../../components/UI/Modal';
+import './style.css'
+import { generatePublicUrl } from '../../urlConfig';
 
 const Products = () => {
     const category = useSelector(state => state.category);
@@ -18,6 +20,8 @@ const Products = () => {
     const [categoryId, setCategoryId] = useState('');
     const [productPicture, setProductPicture] = useState([]);
     const [show, setShow] = useState(false);
+    const [productDetailModal, setProductDetailModal] = useState(false);
+    const [productDetails, setProductDetails] = useState(null);
 
     const handleSubmit = () => {
         const form = new FormData();
@@ -58,14 +62,14 @@ const Products = () => {
 
     const renderProducts = () => {
         return (
-            <Table responsive="sm">
+            <Table style={{ fontSize: 12 }} responsive="sm">
                 <thead>
                     <tr>
                         <th>#</th>
                         <th>Name</th>
                         <th>Price</th>
                         <th>Quantity</th>
-                        <th>Description</th>
+                        {/* <th>Description</th> */}
                         {/* <th>Product Pictures</th> */}
                         <th>Category</th>
                     </tr>
@@ -74,13 +78,13 @@ const Products = () => {
                     {
                         product.products.length > 0 ?
                             product.products.map(product => (
-                                <tr key={product._id} >
+                                <tr key={product._id} onClick={() => { showProductDetailsModal(product) }} >
                                     <td>3</td>
                                     <td>{product.name}</td>
                                     <td>{product.price}</td>
                                     <td>{product.quantity}</td>
-                                    <td>{product.description}</td>
-                                    <td>--</td>
+                                    {/* <td>{product.description}</td> */}
+                                    <td>{product.category.name}</td>
 
                                 </tr>
                             )) : null
@@ -91,29 +95,8 @@ const Products = () => {
         )
     }
 
-
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-    return (
-        <Layout sidebar >
-            <Container>
-                <Row md={12} >
-                    <Col>
-                        <div style={{ display: 'flex', justifyContent: 'space-between' }} >
-                            <h3>Products</h3>
-                            <button onClick={handleShow} >Add</button>
-                        </div>
-
-                    </Col>
-                </Row>
-                <Row>
-                    <Col>
-                        {renderProducts()}
-                    </Col>
-                </Row>
-            </Container>
-
-
+    const renderAddProductModal = () => {
+        return (
             <Modal show={show} handleClose={handleClose} handleSubmit={handleSubmit} modalTitle={'Add new Product'} >
                 <Input
                     label="Name"
@@ -152,6 +135,92 @@ const Products = () => {
                 }
                 <input type='file' name="productPicture" onChange={handleProductPicture} />
             </Modal>
+        )
+    }
+
+    const handleCloseProductDetailsModal = () => {
+        setProductDetailModal(false);
+    }
+    const showProductDetailsModal = (product) => {
+        setProductDetails(product)
+        setProductDetailModal(true);
+
+        console.log(product);
+    }
+
+    const renderProductDetailsModal = () => {
+        if (!productDetails)
+            return null;
+        return (
+            <Modal size="lg" show={productDetailModal} handleClose={handleCloseProductDetailsModal} handleSubmit={handleCloseProductDetailsModal} modalTitle={'Product Details'} >
+                <Row>
+                    <Col md={6} >
+                        <label className="key" >Name</label>
+                        <p className="value" >{productDetails.name}</p>
+                    </Col>
+                    <Col md={6} >
+                        <label className="key" >Price</label>
+                        <p className="value" >{productDetails.price}</p>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col md={6} >
+                        <label className="key" >Quantity</label>
+                        <p className="value" >{productDetails.quantity}</p>
+                    </Col>
+                    <Col md={6} >
+                        <label className="key" >Category</label>
+                        <p className="value" >{productDetails.category.name}</p>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col md={12} >
+                        <label className="key" >Description</label>
+                        <p className="value" >{productDetails.description}</p>
+                    </Col>
+
+                </Row>
+                <Row>
+                    <Col>
+                        <label>Product Picture</label>
+                        <div style={{ display: 'flex' }} >
+                            {productDetails.productPicture.map(picture => (
+                                <div className="productImgContainer" key={picture._id} >
+                                    <img src={generatePublicUrl(picture.img)} alt="pic" />
+                                </div>
+                            ))}
+                        </div>
+
+                    </Col>
+
+                </Row>
+            </Modal>
+        )
+    }
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+    return (
+        <Layout sidebar >
+            <Container>
+                <Row md={12} >
+                    <Col>
+                        <div style={{ display: 'flex', justifyContent: 'space-between' }} >
+                            <h3>Products</h3>
+                            <button onClick={handleShow} >Add</button>
+                        </div>
+
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
+                        {renderProducts()}
+                    </Col>
+                </Row>
+            </Container>
+
+            {renderAddProductModal()}
+            {renderProductDetailsModal()}
         </Layout>
     )
 }
