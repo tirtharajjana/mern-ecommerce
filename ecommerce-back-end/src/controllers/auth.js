@@ -2,6 +2,7 @@ const User = require('../models/user');
 const jwt = require('jsonwebtoken');
 const { validationResult } = require('express-validator')
 const bcrypt = require('bcrypt');
+const shortid = require('shortid');
 
 
 
@@ -14,7 +15,7 @@ exports.signup = (req, res) => {
             }
             const { firstName, lastName, email, password } = req.body;
             const hash_password = await bcrypt.hash(password, 10)
-            const _user = new User({ firstName, lastName, email, hash_password, username: Math.random().toString(), role: "user" });
+            const _user = new User({ firstName, lastName, email, hash_password, username: shortid.generate(), role: "user" });
 
             _user.save((err, data) => {
                 if (err) {
