@@ -9,7 +9,6 @@ function createCategory(categories, parentId = null) {
     } else {
         category = categories.filter(cat => cat.parentId == parentId);
     }
-
     for (const cate of category) {
         categoryList.push({
             _id: cate._id,
@@ -28,16 +27,13 @@ exports.addCategory = (req, res) => {
     const categoryObj = {
         name: req.body.name,
         slug: slugify(req.body.name),
-
     }
     if (req.file) {
-
         categoryObj.categoryImage = process.env.API + '/public/' + req.file.filename;
     }
     if (req.body.parentId) {
         categoryObj.parentId = req.body.parentId
     }
-
     const cat = new Category(categoryObj);
     cat.save((error, category) => {
         if (error)
@@ -55,9 +51,41 @@ exports.getCategories = (req, res) => [
                 return res.status(400).json({ error });
             if (categories) {
                 const categoryList = createCategory(categories)
-
                 return res.status(200).json({ categoryList });
-
             }
         })
 ]
+
+
+exports.updateCategories = async (req, res) => {
+    const { _id, name, parentId, type } = req.body;
+    const updatedCategories = [];
+    if (name instanceof Array) {
+
+        for (let i = 0; i < name.length; i++) {
+            const category = {
+                name: name[i],
+                type: type[i],
+            }
+            if (parentId[i] != '') {
+                category.parentId = parentId[i]
+            }
+
+            const updatedCategory = await Category.findByIdAndUpdate({ _id: _id[i] }, category, { new: true });
+            updatedCategories.push(updatedCategory);
+        }
+        return res.status(201).json({ updatedCategories })
+    } else {
+        let updatedCategory;
+        const category = {
+            name, type
+        }
+        if (parentId != '') {
+            category.parentId = parentId;
+            updatedCategory = await Category.findByIdAndUpdate({ _id }, category, { new: true });
+        }
+        return res.status(201).json({ updatedCategory });
+
+    }
+
+}
