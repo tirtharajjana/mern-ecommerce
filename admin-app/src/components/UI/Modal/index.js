@@ -16,9 +16,17 @@ const NewModal = (props) => {
                     {/* <Button variant="secondary" onClick={props.handleClose}>
                         Close
                     </Button> */}
-                    <Button variant="primary" onClick={props.handleSubmit}>
-                        Save Changes
-                    </Button>
+                    {
+                        props.buttons ? props.buttons.map((btn, index) =>
+                            <Button key={index} variant={btn.color} onClick={btn.onClick}>
+                                {btn.label}
+                            </Button>
+                        ) :
+                            <Button variant="primary" onClick={props.handleSubmit}>
+                                Save Changes
+                            </Button>
+
+                    }
                 </Modal.Footer>
             </Modal>
         </div>
