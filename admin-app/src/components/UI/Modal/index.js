@@ -22,7 +22,7 @@ const NewModal = (props) => {
                                 {btn.label}
                             </Button>
                         ) :
-                            <Button variant="primary" onClick={props.handleSubmit}>
+                            <Button variant="primary"{...props} className='btn-sm' onClick={props.handleSubmit}>
                                 Save Changes
                             </Button>
 
