@@ -42,35 +42,39 @@ export const addCategory = (form) => {
 
 export const updateCategories = (form) => {
     return async dispatch => {
-        // dispatch({ type: categoryConstansts.ADD_NEW_CATEGORY_REQUEST });
+        dispatch({ type: categoryConstansts.UPDATE_CATEGORIES_REQUEST });
         const res = await axios.post(`/category/update`, form);
-        // console.log(res);
         if (res.status === 201) {
-            return true;
-            console.log(res);
-            // dispatch({ type: categoryConstansts.ADD_NEW_CATEGORY_SUCCESS, payload: { category: res.data.category } })
+            dispatch({ type: categoryConstansts.UPDATE_CATEGORIES_SUCCESS });
+            dispatch(getAllCategory());
         } else {
-            // dispatch({ type: categoryConstansts.ADD_NEW_CATEGORY_FAILURE, payload: res.data.error })
-            console.log(res);
-
+            const { error } = res.data;
+            dispatch({
+                type: categoryConstansts.UPDATE_CATEGORIES_FAILURE,
+                payload: { error }
+            });
         }
     }
 }
+
 export const deleteCategories = (ids) => {
     return async dispatch => {
-
+        dispatch({ type: categoryConstansts.DELETE_CATEGORIES_REQUEST });
         const res = await axios.post(`/category/delete`, {
-            payload: { ids }
+            payload: {
+                ids
+            }
         });
-        // console.log(res);
-        if (res.status === 200) {
-            return true;
-            // console.log(res);
-
+        console.log(res);
+        if (res.status === 201) {
+            dispatch(getAllCategory());
+            dispatch({ type: categoryConstansts.DELETE_CATEGORIES_SUCCESS });
         } else {
-            return false;
-            console.log(res);
-
+            const { error } = res.data;
+            dispatch({
+                type: categoryConstansts.DELETE_CATEGORIES_FAILURE,
+                payload: { error }
+            });
         }
     }
 }

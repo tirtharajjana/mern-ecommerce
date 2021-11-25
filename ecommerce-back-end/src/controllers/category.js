@@ -57,40 +57,41 @@ exports.getCategories = (req, res) => [
         })
 ]
 
-
 exports.updateCategories = async (req, res) => {
     const { _id, name, parentId, type } = req.body;
     const updatedCategories = [];
     if (name instanceof Array) {
-
         for (let i = 0; i < name.length; i++) {
             const category = {
                 name: name[i],
                 type: type[i],
-            }
-            if (parentId[i] != '') {
-                category.parentId = parentId[i]
+            };
+            if (parentId[i] !== "") {
+                category.parentId = parentId[i];
             }
 
-            const updatedCategory = await Category.findByIdAndUpdate({ _id: _id[i] }, category, { new: true });
+            const updatedCategory = await Category.findOneAndUpdate(
+                { _id: _id[i] },
+                category,
+                { new: true }
+            );
             updatedCategories.push(updatedCategory);
         }
-        return res.status(201).json({ updatedCategories })
+        return res.status(201).json({ updateCategories: updatedCategories });
     } else {
-        let updatedCategory;
         const category = {
-            name, type
-        }
-        if (parentId != '') {
+            name,
+            type,
+        };
+        if (parentId !== "") {
             category.parentId = parentId;
-            updatedCategory = await Category.findByIdAndUpdate({ _id }, category, { new: true });
         }
+        const updatedCategory = await Category.findOneAndUpdate({ _id }, category, {
+            new: true,
+        });
         return res.status(201).json({ updatedCategory });
-
     }
-
-}
-
+};
 exports.deleteCategories = async (req, res) => {
     const { ids } = req.body.payload;
     const deletedCategories = [];
@@ -100,7 +101,7 @@ exports.deleteCategories = async (req, res) => {
     }
 
     if (deletedCategories.length === ids.length) {
-        res.status(200).json({ message: 'Categories Removed' });
+        res.status(201).json({ message: 'Categories Removed' });
     } else {
         res.status(400).json({ message: 'Something went wrong' });
 

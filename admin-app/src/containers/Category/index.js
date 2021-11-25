@@ -167,11 +167,11 @@ const Category = () => {
 
             dispatch(deleteCategoriesAction(checkedIdsArray))
                 .then(result => {
-                    console.log(result);
+                    // console.log(result);
                     if (result) {
                         dispatch(getAllCategory())
-                        setDeleteCategoryModal(false)
-                    }
+
+                    } setDeleteCategoryModal(false)
                 });
         }
 
