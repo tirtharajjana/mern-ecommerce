@@ -73,7 +73,7 @@ const Category = () => {
 
     const createCategoryList = (categories, options = []) => {
         for (const category of categories) {
-            options.push({ value: category._id, name: category.name, parentId: category.parentId });
+            options.push({ value: category._id, name: category.name, parentId: category.parentId, type: category.type });
             if (category.children.length > 0) {
                 createCategoryList(category.children, options);
             }
@@ -171,10 +171,10 @@ const Category = () => {
                     if (result) {
                         dispatch(getAllCategory())
 
-                    } setDeleteCategoryModal(false)
+                    }
                 });
         }
-
+        setDeleteCategoryModal(false)
 
     }
 

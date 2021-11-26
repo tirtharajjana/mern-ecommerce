@@ -12,6 +12,7 @@ import Products from './containers/Products';
 import Orders from './containers/Orders';
 import Category from './containers/Category';
 import { } from './actions/initialData.action';
+import NewPage from './containers/NewPage';
 
 function App() {
 
@@ -31,6 +32,7 @@ function App() {
       <>
         <Routes>
           <PrivateRoute path='/' element={<Home />} />
+          <PrivateRoute path='/page' element={<NewPage />} />
           <PrivateRoute path='/products' element={<Products />} />
           <PrivateRoute path='/orders' element={<Orders />} />
           <PrivateRoute path='/category' element={<Category />} />
