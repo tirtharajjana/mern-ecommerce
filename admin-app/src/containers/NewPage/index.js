@@ -18,11 +18,23 @@ const NewPage = () => {
     const [banners, setBanners] = useState([]);
     const [products, setProducts] = useState([]);
     const dispatch = useDispatch();
-    // const page = useSelector(state => state.page);
+    const page = useSelector(state => state.page);
 
     useEffect(() => {
         setCategories(linearCategories(category.categories));
     }, [category])
+
+    useEffect(() => {
+        console.log(page);
+        if (!page.loading) {
+            setCreateModal(false);
+            setTitle('');
+            setCategoryId('');
+            setDesc('');
+            setProducts([]);
+            setBanners([]);
+        }
+    }, [page])
 
     const handleBannerImages = (e) => {
         console.log(e);
@@ -77,7 +89,7 @@ const NewPage = () => {
                 <Container>
                     <Row>
                         <Col>
-                            <select
+                            {/* <select
                                 className="form-control"
                                 value={categoryId}
                                 onChange={onCategoryChange}
@@ -88,14 +100,14 @@ const NewPage = () => {
                                         <option key={cat._id} value={cat.value}>{cat.name}</option>
                                     )
                                 }
-                            </select>
-                            {/* <Input
-                                    type="select"
-                                    value={categoryId}
-                                    // onChange={onCategoryChange}
-                                    options={categories}
-                                    placeholder={'Select Category'}
-                                /> */}
+                            </select> */}
+                            <Input
+                                type="select"
+                                value={categoryId}
+                                onChange={onCategoryChange}
+                                options={categories}
+                                placeholder={'Select Category'}
+                            />
                         </Col>
                     </Row>
 
@@ -169,8 +181,15 @@ const NewPage = () => {
     }
     return (
         <Layout sidebar >
-            {renderCreatePageModal()}
-            <button onClick={() => setCreateModal(true)} >Create page</button>
+            {
+                page.loading ?
+                    <>Creating page please wait</> :
+                    <>
+                        {renderCreatePageModal()}
+                        <button onClick={() => setCreateModal(true)} >Create page</button>
+
+                    </>
+            }
         </Layout>
     )
 }

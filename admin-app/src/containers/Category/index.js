@@ -32,12 +32,19 @@ const Category = () => {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
+    useEffect(() => {
+        if (!category.loading) {
+            setShow(false);
+        }
+
+    }, [category.loading])
+
     const handleSubmit = () => {
         setShow(false);
-        // if (categoryName === '') {
-        //     alert("Name is required");
-        //     return;
-        // }
+        if (categoryName === '') {
+            alert("Name is required");
+            return;
+        }
 
         const form = new FormData();
         form.append('name', categoryName);

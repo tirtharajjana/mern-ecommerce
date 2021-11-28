@@ -22,9 +22,12 @@ function App() {
   useEffect(() => {
     if (!auth.authenticate)
       dispatch(isUserLoggedIn());
-    dispatch(getInitialData());
+    if (auth.authenticate) {
 
-  }, [])
+      dispatch(getInitialData());
+    }
+
+  }, [auth.authenticate])
 
   return (
     <>
