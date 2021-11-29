@@ -14,7 +14,7 @@ const Input = (props) => {
             input = <Form.Group>
                 {props.label && <Form.Label>{props.label}</Form.Label>}
                 <select
-                    className="form-control form-control-sm"
+                    className="form-control"
                     value={props.value}
                     onChange={props.onChange}
                 >
