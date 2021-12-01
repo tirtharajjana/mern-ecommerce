@@ -28,7 +28,7 @@ const ProductStore = () => {
             {
                 Object.keys(product.productsByPrice).map((key, index) => {
                     return (
-                        <div className="card">
+                        <div key={index} className="card">
                             <div className="cardHeader">
                                 <div>{slug} mobile under  {priceRange[key]}</div>
                                 <button>view all</button>

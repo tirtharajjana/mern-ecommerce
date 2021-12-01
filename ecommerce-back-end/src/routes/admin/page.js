@@ -12,7 +12,7 @@ router.post('/page/create', requireSignin, upload.fields([
     { name: 'products' }
 ]), createPage);
 
-router.get(`/page/:category/:type`, getPage)
+router.get('/page/:category/:type', getPage)
 
 
 module.exports = router;
