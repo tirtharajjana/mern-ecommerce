@@ -4,6 +4,7 @@ import { getProductsBySlug } from '../../../actions';
 import { useParams } from 'react-router';
 import './style.css'
 import { generatePublicUrl } from '../../../urlConfig';
+import { Link } from 'react-router-dom';
 
 
 const ProductStore = () => {
@@ -36,7 +37,7 @@ const ProductStore = () => {
                             <div style={{ display: 'flex' }}>
                                 {
                                     product.productsByPrice[key].map(product =>
-                                        <div className="productContainer">
+                                        <Link style={{ display: "block" }} to={`/${product.slug}/${product._id}/p`} className="productContainer">
                                             <div className="productImgContainer">
                                                 <img src={generatePublicUrl(product.productPicture[0].img)} alt="" />
                                             </div>
@@ -48,7 +49,7 @@ const ProductStore = () => {
                                                 </div>
                                                 <div className="productPrice">{product.price}</div>
                                             </div>
-                                        </div>
+                                        </Link>
                                     )
                                 }
                             </div>
