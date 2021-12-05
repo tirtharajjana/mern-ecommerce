@@ -46,6 +46,12 @@ const Header = (props) => {
         }
     }, [auth.authenticate]);
 
+
+    const logout = () => {
+        dispatch(signout());
+    };
+
+
     const renderLoggedInMenu = () => {
         return (
             <DropdownMenu
@@ -66,7 +72,7 @@ const Header = (props) => {
                     { label: "Rewards", href: "", icon: null },
                     { label: "Notifications", href: "", icon: null },
                     { label: "Gift Cards", href: "", icon: null },
-                    // { label: "Logout", href: "", icon: null, onClick: logout },
+                    { label: "Logout", href: "", icon: null, onClick: logout },
                 ]}
             />
         );

@@ -79,6 +79,10 @@
     font-weight: 400;
 }
 
+.flexRow {
+    display: flex;
+}
+
 .ratingCount {
     display: inline-block;
     background: #388e3c;
