@@ -1,5 +1,5 @@
 import axiosInstance from "../helpers/axios"
-import { productConstants } from "./constantes"
+import { productConstants } from "./constants"
 
 export const getProductsBySlug = (slug) => {
     return async dispatch => {

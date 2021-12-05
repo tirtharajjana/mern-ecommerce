@@ -1,4 +1,4 @@
-import { userContants } from "../actions/constantes"
+import { userContants } from "../actions/constants"
 
 const initialState = {
     // token: null,

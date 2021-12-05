@@ -1,5 +1,5 @@
 import axiosInstance from "../helpers/axios"
-import { categoryConstansts, initialDataConstants, productConstants } from "./constantes"
+import { categoryConstansts, initialDataConstants, productConstants } from "./constants"
 
 
 export const getInitialData = () => {

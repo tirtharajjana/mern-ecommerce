@@ -1,4 +1,4 @@
-import { authConstants, cartConstants } from "./constantes";
+import { authConstants, cartConstants } from "./constants";
 import axios from "../helpers/axios";
 
 // new update signup action

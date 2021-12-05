@@ -1,5 +1,5 @@
 import axios from "../helpers/axios";
-import { userContants } from "./constantes";
+import { userContants } from "./constants";
 export const signup = (user) => {
 
     return async (dispatch) => {

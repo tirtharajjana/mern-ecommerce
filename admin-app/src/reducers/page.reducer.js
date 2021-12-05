@@ -1,4 +1,4 @@
-import { pageConstants } from "../actions/constantes"
+import { pageConstants } from "../actions/constants"
 
 const initState = {
     error: null,

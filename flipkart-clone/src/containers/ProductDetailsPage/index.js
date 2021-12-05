@@ -9,8 +9,9 @@ import { AiFillThunderbolt } from "react-icons/ai";
 import { MaterialButton } from "../../components/MaterialUI";
 import "./style.css";
 import { addToCart } from "../../actions";
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { generatePublicUrl } from "../../urlConfig";
+
 
 /**
  * @author
@@ -20,6 +21,8 @@ import { generatePublicUrl } from "../../urlConfig";
 const ProductDetailsPage = (props) => {
     const dispatch = useDispatch();
     const product = useSelector((state) => state.product);
+
+    let navigate = useNavigate();
 
     const { productId } = useParams();
     useEffect(() => {
@@ -43,7 +46,7 @@ const ProductDetailsPage = (props) => {
                 <div className="flexRow">
                     <div className="verticalImageStack">
                         {product.productDetails.productPicture.map((thumb, index) => (
-                            <div className="thumbnail">
+                            <div key={index} className="thumbnail">
                                 <img src={generatePublicUrl(thumb.img)} alt={thumb.img} />
                             </div>
                         ))}
@@ -70,7 +73,7 @@ const ProductDetailsPage = (props) => {
                                     const { _id, name, price } = product.productDetails;
                                     const img = generatePublicUrl(product.productDetails.productPicture[0].img);
                                     dispatch(addToCart({ _id, name, price, img }));
-                                    props.history.push(`/cart`);
+                                    navigate(`/cart`);
                                 }}
                             />
                             <MaterialButton

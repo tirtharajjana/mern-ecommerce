@@ -1,5 +1,5 @@
 import axios from "../helpers/axios";
-import { categoryConstansts } from "./constantes";
+import { categoryConstansts } from "./constants";
 
 
 export const getAllCategory = () => {
