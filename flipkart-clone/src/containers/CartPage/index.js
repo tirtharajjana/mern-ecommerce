@@ -5,8 +5,10 @@ import Card from '../../components/UI/Card';
 import { generatePublicUrl } from '../../urlConfig';
 import CartItem from './CartItem';
 import { addToCart, getCartItems } from '../../actions';
+import { useNavigate } from 'react-router-dom';
 
 import './style.css';
+import { MaterialButton } from '../../components/MaterialUI';
 
 /**
 * @author
@@ -28,6 +30,7 @@ const CartPage = (props) => {
     // const cartItems = cart.cartItems;
     const [cartItems, setCartItems] = useState(cart.cartItems);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     useEffect(() => {
         setCartItems(cart.cartItems);
@@ -56,6 +59,7 @@ const CartPage = (props) => {
                 <Card
                     headerLeft={`My Cart`}
                     headerRight={<div>Deliver to</div>}
+                    style={{ width: 'calc(100% - 400px)', overflow: 'hidden' }}
                 >
                     {
                         Object.keys(cartItems).map((key, index) =>
@@ -67,11 +71,30 @@ const CartPage = (props) => {
                             />
                         )
                     }
+
+
+                    <div style={{
+                        width: '100%',
+                        display: 'flex',
+                        background: '#ffffff',
+                        justifyContent: 'flex-end',
+                        boxShadow: '0 0 10px 10px #eee',
+                        padding: '10px 0',
+                        boxSizing: 'border-box'
+                    }}>
+                        <div style={{ width: '250px' }}>
+                            <MaterialButton
+                                title="PLACE ORDER"
+                                onClick={() => navigate(`/checkout`)}
+                            />
+                        </div>
+
+                    </div>
                 </Card>
                 <Card
                     headerLeft='Price'
                     style={{
-                        width: '500px'
+                        width: '380px'
                     }}>
 
                 </Card>

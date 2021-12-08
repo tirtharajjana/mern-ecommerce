@@ -71,7 +71,7 @@ const ProductDetailsPage = (props) => {
                                 icon={<IoMdCart />}
                                 onClick={() => {
                                     const { _id, name, price } = product.productDetails;
-                                    const img = generatePublicUrl(product.productDetails.productPicture[0].img);
+                                    const img = product.productDetails.productPicture[0].img;
                                     dispatch(addToCart({ _id, name, price, img }));
                                     navigate(`/cart`);
                                 }}
