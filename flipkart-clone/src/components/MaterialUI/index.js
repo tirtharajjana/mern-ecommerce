@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import './style.css';
+import React, { useState } from "react";
+import "./style.css";
 
 /**
-* @author Rizwan Khan
-* @function 
-**/
+ * @author Rizwan Khan
+ * @function
+ **/
 
 const Modal = (props) => {
     if (!props.visible) {
@@ -13,59 +13,67 @@ const Modal = (props) => {
     return (
         <>
             <div className="modalFixedBg">
-                <div style={{ position: 'relative' }}>
-                    <div className="modalClose" onClick={props.onClose}>X</div>
-                    <div className="modalContainer">
-                        {props.children}
+                <div style={{ position: "relative" }}>
+                    <div className="modalClose" onClick={props.onClose}>
+                        X
                     </div>
+                    <div className="modalContainer">{props.children}</div>
                 </div>
             </div>
         </>
-    )
-}
+    );
+};
 
 const MaterialInput = (props) => {
     const [focus, setFocus] = useState(false);
 
     return (
         <div className="materialInput">
-            <label className={`label ${focus ? 'focus' : ''}`} style={{
-                top: 0,
-                lineHeight: 'none'
-            }}>{props.label}</label>
-            <div style={{
-                display: 'flex'
-            }}>
-                <input className="input"
+            <label
+                className={`label ${focus ? "focus" : ""}`}
+                style={{
+                    top: 0,
+                    lineHeight: "none",
+                }}
+            >
+                {props.label}
+            </label>
+            <div
+                style={{
+                    display: "flex",
+                }}
+            >
+                <input
+                    className="input"
                     type={props.type}
                     value={props.value}
                     onChange={props.onChange}
                     onFocus={(e) => {
-                        setFocus(true)
+                        setFocus(true);
                     }}
                     onBlur={(e) => {
                         if (e.target.value === "") {
-                            setFocus(false)
+                            setFocus(false);
                         }
-                    }} />
-                {
-                    props.rightElement ? props.rightElement : null
-                }
+                    }}
+                />
+                {props.rightElement ? props.rightElement : null}
             </div>
         </div>
-    )
-}
+    );
+};
 
 const MaterialButton = (props) => {
-
     const onClick = () => {
         props.onClick && props.onClick();
-    }
+    };
     return (
-        <div style={{
-            width: '100%',
-            ...props.style
-        }}>
+        <div
+            style={{
+                width: "100%",
+                ...props.style,
+            }}
+        >
             <button
                 className="materialButton"
                 style={{
@@ -78,9 +86,8 @@ const MaterialButton = (props) => {
                 {props.title && props.title}
             </button>
         </div>
-
-    )
-}
+    );
+};
 
 const DropdownMenu = (props) => {
     return (
@@ -90,27 +97,32 @@ const DropdownMenu = (props) => {
                 <div className="upArrow"></div>
                 {props.firstMenu}
                 <ul className="headerDropdownMenu">
-                    {
-                        props.menus && props.menus.map((item, index) =>
+                    {props.menus &&
+                        props.menus.map((item, index) => (
                             <li key={index}>
-                                <a onClick={(e) => {
-                                    e.preventDefault();
-                                    item.onClick && item.onClick()
-                                }}
-                                    href={item.href}>{item.label}
+                                <a
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        item.onClick && item.onClick();
+                                    }}
+                                    href={item.href}
+                                >
+                                    {item.label}
                                 </a>
                             </li>
-                        )
-                    }
+                        ))}
                 </ul>
             </div>
         </div>
     );
-}
+};
 
-export {
-    Modal,
-    MaterialInput,
-    MaterialButton,
-    DropdownMenu
-}
+const Anchor = (props) => {
+    return (
+        <button {...props} className="anchorButton">
+            {props.name}
+        </button>
+    );
+};
+
+export { Modal, MaterialInput, MaterialButton, DropdownMenu, Anchor };
