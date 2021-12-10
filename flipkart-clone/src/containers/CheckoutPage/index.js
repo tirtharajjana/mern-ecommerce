@@ -68,6 +68,7 @@ const Address = ({
                                 />
                             )}
                         </div>
+
                         <div className="fullAddress">
                             {adr.address} <br /> {`${adr.state} - ${adr.pinCode}`}
                         </div>
