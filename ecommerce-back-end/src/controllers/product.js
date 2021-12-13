@@ -7,22 +7,21 @@ exports.createProduct = (req, res) => {
     //res.status(200).json( { file: req.files, body: req.body } );
 
     const { name, price, description, category, quantity, createdBy } = req.body;
-    let productPicture = [];
+    let productPictures = [];
 
     if (req.files.length > 0) {
-
-        productPicture = req.files.map((file) => {
+        productPictures = req.files.map((file) => {
             return { img: file.filename };
         });
     }
-    // console.log(productPicture);
+
     const product = new Product({
         name: name,
         slug: slugify(name),
         price,
         quantity,
         description,
-        productPicture,
+        productPictures,
         category,
         createdBy: req.user._id,
     });
@@ -30,7 +29,7 @@ exports.createProduct = (req, res) => {
     product.save((error, product) => {
         if (error) return res.status(400).json({ error });
         if (product) {
-            res.status(201).json({ product, files: req.files });
+            res.status(201).json({ product });
         }
     });
 };
@@ -54,13 +53,6 @@ exports.getProductsBySlug = (req, res) => {
                         if (products.length > 0) {
                             res.status(200).json({
                                 products,
-                                priceRange: {
-                                    under5k: 5000,
-                                    under10k: 10000,
-                                    under15k: 15000,
-                                    under20k: 20000,
-                                    under30k: 30000,
-                                },
                                 productsByPrice: {
                                     under5k: products.filter((product) => product.price <= 5000),
                                     under10k: products.filter(
@@ -98,28 +90,4 @@ exports.getProductDetailsById = (req, res) => {
     } else {
         return res.status(400).json({ error: "Params required" });
     }
-};
-
-// new update
-exports.deleteProductById = (req, res) => {
-    const { productId } = req.body.payload;
-    if (productId) {
-        Product.deleteOne({ _id: productId }).exec((error, result) => {
-            if (error) return res.status(400).json({ error });
-            if (result) {
-                res.status(202).json({ result });
-            }
-        });
-    } else {
-        res.status(400).json({ error: "Params required" });
-    }
-};
-
-exports.getProducts = async (req, res) => {
-    const products = await Product.find({ createdBy: req.user._id })
-        .select("_id name price quantity slug description productPicture  category")
-        .populate({ path: "category", select: "_id name" })
-        .exec();
-
-    res.status(200).json({ products });
 };

@@ -1,62 +1,63 @@
-const Category = require('../models/category');
-const slugify = require('slugify');
-const shortid = require('shortid')
+const Category = require("../models/category");
+const slugify = require("slugify");
+const shortid = require("shortid");
 
-function createCategory(categories, parentId = null) {
+function createCategories(categories, parentId = null) {
     const categoryList = [];
     let category;
     if (parentId == null) {
-        category = categories.filter(cat => cat.parentId == undefined);
+        category = categories.filter((cat) => cat.parentId == undefined);
     } else {
-        category = categories.filter(cat => cat.parentId == parentId);
+        category = categories.filter((cat) => cat.parentId == parentId);
     }
-    for (const cate of category) {
+
+    for (let cate of category) {
         categoryList.push({
             _id: cate._id,
             name: cate.name,
             slug: cate.slug,
             parentId: cate.parentId,
             type: cate.type,
-            children: createCategory(categories, cate._id)
-        })
+            children: createCategories(categories, cate._id),
+        });
     }
-    return categoryList
+
+    return categoryList;
 }
 
 exports.addCategory = (req, res) => {
-    let categoryUrl
-
     const categoryObj = {
         name: req.body.name,
         slug: `${slugify(req.body.name)}-${shortid.generate()}`,
-    }
+    };
+
     if (req.file) {
-        categoryObj.categoryImage = process.env.API + '/public/' + req.file.filename;
+        categoryObj.categoryImage =
+            process.env.API + "/public/" + req.file.filename;
     }
+
     if (req.body.parentId) {
-        categoryObj.parentId = req.body.parentId
+        categoryObj.parentId = req.body.parentId;
     }
+
     const cat = new Category(categoryObj);
     cat.save((error, category) => {
-        if (error)
-            return res.status(400).json({ error });
-        if (category)
+        if (error) return res.status(400).json({ error });
+        if (category) {
             return res.status(201).json({ category });
+        }
+    });
+};
 
-    })
-}
-
-exports.getCategories = (req, res) => [
-    Category.find({})
-        .exec((error, categories) => {
-            if (error)
-                return res.status(400).json({ error });
-            if (categories) {
-                const categoryList = createCategory(categories)
-                return res.status(200).json({ categoryList });
-            }
-        })
-]
+exports.getCategories = (req, res) => {
+    Category.find({}).exec((error, categories) => {
+        if (error) return res.status(400).json({ error });
+        if (categories) {
+            const categoryList = createCategories(categories);
+            res.status(200).json({ categoryList });
+        }
+    });
+};
 
 exports.updateCategories = async (req, res) => {
     const { _id, name, parentId, type } = req.body;
@@ -93,18 +94,18 @@ exports.updateCategories = async (req, res) => {
         return res.status(201).json({ updatedCategory });
     }
 };
+
 exports.deleteCategories = async (req, res) => {
     const { ids } = req.body.payload;
     const deletedCategories = [];
     for (let i = 0; i < ids.length; i++) {
-        const deleteCategories = await Category.findOneAndDelete({ _id: ids[i]._id })
-        deletedCategories.push(deleteCategories)
+        const deleteCategory = await Category.findOneAndDelete({ _id: ids[i]._id });
+        deletedCategories.push(deleteCategory);
     }
 
-    if (deletedCategories.length === ids.length) {
-        res.status(201).json({ message: 'Categories Removed' });
+    if (deletedCategories.length == ids.length) {
+        res.status(201).json({ message: "Categories removed" });
     } else {
-        res.status(400).json({ message: 'Something went wrong' });
-
+        res.status(400).json({ message: "Something went wrong" });
     }
-}
+};

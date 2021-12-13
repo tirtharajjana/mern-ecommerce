@@ -8,6 +8,7 @@ import { isUserLoggedIn, updateCart } from "./actions";
 import ProductDetailsPage from "./containers/ProductDetailsPage";
 import CartPage from "./containers/CartPage";
 import CheckoutPage from "./containers/CheckoutPage";
+import OrderPage from "./containers/OrderPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -34,6 +35,7 @@ function App() {
           <Route path='/:slug' element={<ProductListPage />} />
           <Route path='/checkout' element={<CheckoutPage />} />
           <Route path='/:productSlug/:productId/p' element={<ProductDetailsPage />} />
+          <Route path="/account/orders" element={<OrderPage />} />
         </Routes>
 
       </div>
