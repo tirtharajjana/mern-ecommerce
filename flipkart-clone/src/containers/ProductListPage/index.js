@@ -5,6 +5,7 @@ import ClothingAndAccessories from "./ClothingAndAccessories";
 import ProductPage from "./ProductPage";
 import ProductStore from "./ProductStore";
 import "./style.css";
+import { useLocation } from "react-router-dom";
 
 /**
  * @author
@@ -13,8 +14,12 @@ import "./style.css";
 
 const ProductListPage = (props) => {
     const renderProduct = () => {
-        console.log(props);
-        const params = getParams(props.location.search);
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        // const params = useParams();
+        // console.log({ params });
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        const location = useLocation();
+        const params = getParams(location.search);
         let content = null;
         switch (params.type) {
             case "store":

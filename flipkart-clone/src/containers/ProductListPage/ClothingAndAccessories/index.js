@@ -5,7 +5,7 @@ import Card from "../../../components/UI/Card";
 import { generatePublicUrl } from "../../../urlConfig";
 import { BiRupee } from "react-icons/bi";
 import { Link } from "react-router-dom";
-
+import { useParams } from "react-router-dom";
 import "./style.css";
 
 /**
@@ -16,10 +16,11 @@ import "./style.css";
 const ClothingAndAccessories = (props) => {
     const product = useSelector((state) => state.product);
     const dispatch = useDispatch();
-
+    const params = useParams();
+    // console.log(`params`, params)
     useEffect(() => {
-        const { match } = props;
-        dispatch(getProductsBySlug(match.params.slug));
+        const { slug } = params;
+        dispatch(getProductsBySlug(slug));
     }, []);
 
     return (
@@ -37,7 +38,7 @@ const ClothingAndAccessories = (props) => {
                             className="caImgContainer"
                             to={`/${product.slug}/${product._id}/p`}
                         >
-                            <img src={generatePublicUrl(product.productPictures[0].img)} />
+                            <img src={generatePublicUrl(product.productPicture[0].img)} />
                         </Link>
                         <div>
                             <div className="caProductName">{product.name}</div>

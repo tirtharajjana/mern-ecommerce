@@ -42,13 +42,13 @@ const OrderPage = (props) => {
                             <div className="orderItemContainer">
                                 <div className="orderImgContainer">
 
-                                    {/* <img
+                                    <img
                                         className="orderImg"
                                         src={generatePublicUrl(
                                             item.productId.productPicture[0].img
                                         )}
                                         alt=""
-                                    /> */}
+                                    />
                                 </div>
                                 <div className="orderRow">
                                     <div className="orderName">{item.productId.name}</div>
