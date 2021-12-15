@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addOrder, getAddress, getCartItems } from "../../actions";
@@ -163,6 +162,7 @@ const CheckoutPage = (props) => {
             totalAmount,
             items,
             paymentStatus: "pending",
+            paymentType: "cod",
         };
 
         console.log(payload);
