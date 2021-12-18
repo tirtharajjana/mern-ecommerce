@@ -5,7 +5,7 @@ import Layout from "../../components/Layout";
 import Card from "../../components/UI/Card";
 import { generatePublicUrl } from "../../urlConfig";
 import CartItem from "./CartItem";
-import { addToCart, getCartItems } from "../../actions";
+import { addToCart, getCartItems, removeCartItem } from "../../actions";
 import PriceDetails from "../../components/PriceDetails";
 
 import "./style.css";
@@ -25,7 +25,7 @@ when try to checkout ask for credentials and
 if logged in then add products to users cart database from localStorage
 */
 
-export const CartPage = (props) => {
+const CartPage = (props) => {
     const cart = useSelector((state) => state.cart);
     const auth = useSelector((state) => state.auth);
     // const cartItems = cart.cartItems;
@@ -52,6 +52,10 @@ export const CartPage = (props) => {
     const onQuantityDecrement = (_id, qty) => {
         const { name, price, img } = cartItems[_id];
         dispatch(addToCart({ _id, name, price, img }, -1));
+    };
+
+    const onRemoveCartItem = (_id) => {
+        dispatch(removeCartItem({ productId: _id }));
     };
 
     if (props.onlyCartItems) {
@@ -83,6 +87,7 @@ export const CartPage = (props) => {
                             cartItem={cartItems[key]}
                             onQuantityInc={onQuantityIncrement}
                             onQuantityDec={onQuantityDecrement}
+                            onRemoveCartItem={onRemoveCartItem}
                         />
                     ))}
 
@@ -120,4 +125,3 @@ export const CartPage = (props) => {
 };
 
 export default CartPage;
-

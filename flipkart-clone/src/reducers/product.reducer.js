@@ -1,19 +1,16 @@
+
 import { productConstants } from "../actions/constants";
 
 const initState = {
     products: [],
-    productsByPrice: {
-        under5k: [],
-        under10k: [],
-        under15k: [],
-        under20k: [],
-    },
+    priceRange: {},
+    productsByPrice: {},
     pageRequest: false,
     page: {},
     error: null,
     productDetails: {},
     loading: false,
-}
+};
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default (state = initState, action) => {
@@ -23,10 +20,11 @@ export default (state = initState, action) => {
             state = {
                 ...state,
                 products: action.payload.products,
+                priceRange: action.payload.priceRange,
                 productsByPrice: {
-                    ...action.payload.productsByPrice
-                }
-            }
+                    ...action.payload.productsByPrice,
+                },
+            };
             break;
         case productConstants.GET_PRODUCT_PAGE_REQUEST:
             state = {
@@ -69,5 +67,6 @@ export default (state = initState, action) => {
             };
             break;
     }
+
     return state;
-}
+};

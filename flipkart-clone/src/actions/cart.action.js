@@ -1,3 +1,4 @@
+
 import axios from "../helpers/axios";
 import { cartConstants } from "./constants";
 import store from "../store";
@@ -123,8 +124,6 @@ export const updateCart = () => {
                         dispatch(getCartItems());
                     }
                 }
-            } else {
-                dispatch(getCartItems());
             }
         } else {
             if (cartItems) {
