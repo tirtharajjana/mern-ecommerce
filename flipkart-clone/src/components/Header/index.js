@@ -65,9 +65,9 @@ const Header = (props) => {
         }
     }, [auth.authenticate]);
 
-    useEffect(() => {
-        dispatch(getCartItems());
-    }, []);
+    // useEffect(() => {
+    //   dispatch(getCartItems());
+    // }, []);
 
     const renderLoggedInMenu = () => {
         return (
@@ -152,6 +152,9 @@ const Header = (props) => {
                         </div>
                         <div className="rightspace">
                             <div className="loginInputContainer">
+                                {auth.error && (
+                                    <div style={{ color: "red", fontSize: 12 }}>{auth.error}</div>
+                                )}
                                 {signup && (
                                     <MaterialInput
                                         type="text"

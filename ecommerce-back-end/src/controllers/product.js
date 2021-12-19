@@ -8,10 +8,10 @@ exports.createProduct = (req, res) => {
     //res.status(200).json( { file: req.files, body: req.body } );
 
     const { name, price, description, category, quantity, createdBy } = req.body;
-    let productPictures = [];
+    let productPicture = [];
 
     if (req.files.length > 0) {
-        productPictures = req.files.map((file) => {
+        productPicture = req.files.map((file) => {
             return { img: file.filename };
         });
     }
@@ -22,7 +22,7 @@ exports.createProduct = (req, res) => {
         price,
         quantity,
         description,
-        productPictures,
+        productPicture,
         category,
         createdBy: req.user._id,
     });
@@ -117,7 +117,7 @@ exports.deleteProductById = (req, res) => {
 
 exports.getProducts = async (req, res) => {
     const products = await Product.find({})
-        .select("_id name price quantity slug description productPictures category")
+        .select("_id name price quantity slug description productPicture category")
         .populate({ path: "category", select: "_id name" })
         .exec();
 
